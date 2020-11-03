@@ -6,16 +6,12 @@
 # pkl version of twdne example: https://github.com/Antiky/StyleGAN-Anime/blob/master/pretrained_example.py
 # dnnlib needed for pkl: pip install https://github.com/podgorskiy/dnnlib/releases/download/0.0.1/dnnlib-0.0.1-py3-none-any.whl
 # onnx runtime: https://github.com/Microsoft/onnxruntime (brew install libomp)
+# nice venv from requirements tutorial: https://stackoverflow.com/questions/43256369/how-to-rename-a-virtualenv-in-python
 
 
 import onnx
 import warnings
-# from onnx_tf.backend import prepare
 import numpy as np
-# import pickle
-# import dnnlib
-# import dnnlib.tflib as tflib
-# import tensorflow as tf
 import onnxruntime as rt
 import matplotlib.pyplot as plt
 from PIL import Image
