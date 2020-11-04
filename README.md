@@ -24,6 +24,12 @@ It is assumed the user already has python3. A basic understanding of python is u
 - Download the TWDNE3.onnx model from https://hivemind-repo.s3-us-west-2.amazonaws.com/twdne3/twdne3.onnx and move it to your project repo
 - If that's no longer active, look for an update on https://www.gwern.net/Faces#
 
+**Runtime**
+- You will need to create your own discord bot token. [Instructions](https://www.writebots.com/discord-bot-token/)
+- You will need to create your own *credentials.cfg* file containing the token to be read in by [configparser](https://docs.python.org/3/library/configparser.html)
+- You will need to edit the .onnx model filepaths. Currently hardcoded in *discord_client.py*
+- You may adjust the "artistic liberty" of the generator by changing the TRUNCATION scalar from 0 (no liberty, converged to single average waifu) to any float. Gwern defaults to 0.7 for his work; anything over 1.2 or so results in Lovecraftian horror
+
 ## Motivation
 The application is fun, but I wrote this project to explore a few interesting technical areas.
 1. ONNX. [ONNX](https://onnx.ai) is a common model interoperability platform introduced by Facebook and Microsoft in 2017, and allows for users to run framework-agnostic models by converting to its own common format. This repo uses an onnx model and onnx runtime to perform inference and generate images.
