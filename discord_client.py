@@ -1,4 +1,5 @@
 # async routines: https://dev.to/code_enzyme/introduction-to-using-async-await-in-python-2i0n
+# discord client event reference: https://discordpy.readthedocs.io/en/latest/api.html
 
 import discord
 import configparser
