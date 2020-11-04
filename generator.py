@@ -13,7 +13,6 @@ import onnx
 import warnings
 import numpy as np
 import onnxruntime as rt
-import matplotlib.pyplot as plt
 from PIL import Image
 
 def load_model(path:str) -> rt.InferenceSession:
@@ -55,7 +54,7 @@ def post_process_preds(pred:np.array) -> np.array:
 def main():
 
     ONNX_MODEL = "/Users/jesse/Documents/waifu_bot/twdne3.onnx"
-    TRUNCATION = 0.7
+    TRUNCATION = 1.5
 
     # get session
     sess = load_model(ONNX_MODEL)
