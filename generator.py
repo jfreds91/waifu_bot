@@ -1,12 +1,5 @@
-# test onnx image gen
-
-# pkl version of twdne3: https://www.gwern.net/TWDNE#downloads
-# rsync used: rsync --recursive --times --verbose rsync://78.46.86.149:873/twdne/2019-02-26-stylegan-faces-network-02048-016041.pkl ./
-# simple onnx-tf example: https://github.com/onnx/tutorials/blob/master/tutorials/OnnxTensorflowImport.ipynb
-# pkl version of twdne example: https://github.com/Antiky/StyleGAN-Anime/blob/master/pretrained_example.py
-# dnnlib needed for pkl: pip install https://github.com/podgorskiy/dnnlib/releases/download/0.0.1/dnnlib-0.0.1-py3-none-any.whl
 # onnx runtime: https://github.com/Microsoft/onnxruntime (brew install libomp)
-# nice venv from requirements tutorial: https://stackoverflow.com/questions/43256369/how-to-rename-a-virtualenv-in-python
+# nice venv from requirements refresher: https://stackoverflow.com/questions/43256369/how-to-rename-a-virtualenv-in-python
 
 import os
 import onnx

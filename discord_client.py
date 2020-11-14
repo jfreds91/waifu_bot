@@ -10,36 +10,48 @@ config = configparser.ConfigParser()
 config.read('./credentials.cfg')
 token = config['discord']['token']
 
-# prepare client
-client = discord.Client()
-filename = './discord_waifu.jpeg'
-# prepare model
-sess = generator.load_model("/Users/jesse/Documents/waifu_bot/twdne3.onnx")
+def client_startup():
+    '''
+    This function starts the discord client, loads the onnx model for inference,
+        and defines client events
+    '''
+    global client
+    global filename
+    global sess
 
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
+    # prepare client
+    client = discord.Client()
+    filename = './discord_waifu.jpeg'
+    # prepare model
+    sess = generator.load_model("/Users/jesse/Documents/waifu_bot/twdne3.onnx")
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        # self message, do nothing
-        return
-    
-    if message.content.lower().startswith('claim waifu'):
-        await message.channel.send(f'Recieved call for waifu from {message.author}...')
+
+    @client.event
+    async def on_ready():
+        print(f'We have logged in as {client.user}')
+
+
+    @client.event
+    async def on_message(message):
+        if message.author == client.user:
+            # self message, do nothing
+            return
         
-        # generate waifu
-        # run inference
-        pred = generator.run_inference(sess, TRUNCATION=.8)
-        # post process
-        arr = generator.post_process_preds(pred)
-        # save waifu
-        im = Image.fromarray(arr)
-        im.save(filename)
+        if message.content.lower().startswith('claim waifu'):
+            await message.channel.send(f'Recieved call for waifu from {message.author}...')
+            
+            # generate waifu
+            # run inference
+            pred = generator.run_inference(sess, TRUNCATION=.75)
+            # post process
+            arr = generator.post_process_preds(pred)
+            # save waifu
+            im = Image.fromarray(arr)
+            im.save(filename)
 
-        await message.channel.send(file=discord.File(filename))
+            await message.channel.send(file=discord.File(filename))
 
 
-
-client.run(token)
+if __name__ == '__main__':
+    client_startup()
+    client.run(token)
