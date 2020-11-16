@@ -58,10 +58,10 @@ async def test(ctx, arg=None):
         await ctx.send('No arg supplied')   
 
 @bot.command()
-async def claim_waifu(ctx, arg='0.75'):
+async def claim_waifu_truncation(ctx, arg='0.75'):
     # claim waifu at desired truncation
-
-    await ctx.send(f'Recieved call for waifu from {ctx.message.author}...')
+    
+    await ctx.send(f'Received call for waifu from {ctx.message.author}...')
 
     if type(arg) == float:
         trunc = arg
@@ -76,7 +76,7 @@ async def claim_waifu(ctx, arg='0.75'):
             await ctx.send(f'@jfreds, {ctx.message.author} is trying to bweak me! :( \n{e}')
             return
         if not np.isfinite(trunc):
-            await ctx.send(f'I\'m sowwy {ctx.message.author}, I can\'t let you do that')
+            await ctx.send(f'Hey {ctx.message.author}, fucking stop nerd')
             return
 
     # generate waifu
@@ -88,7 +88,30 @@ async def claim_waifu(ctx, arg='0.75'):
     im = Image.fromarray(arr)
     im.save(filename)
 
-    await ctx.send(file=discord.File(filename))
+    await ctx.send(
+        content=f'intensity = {trunc}',
+        file=discord.File(filename)
+        )
+
+@bot.command()
+async def claim_waifu(ctx, arg=None):
+    # claim waifu with desired name
+    
+    await ctx.send(f'Received call for waifu from {ctx.message.author}...')
+
+    # generate waifu
+    # run inference
+    pred = generator.run_inference(sess, seed=arg)
+    # post process
+    arr = generator.post_process_preds(pred)
+    # save waifu
+    im = Image.fromarray(arr)
+    im.save(filename)
+
+    await ctx.send(
+        content=f'Meet {arg}-chan, isn\'t (s)he beautiful?' if arg else None,
+        file=discord.File(filename)
+        )
 
 
 bot.run(token)

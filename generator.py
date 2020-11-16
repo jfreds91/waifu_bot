@@ -5,6 +5,7 @@ import os
 import onnx
 import warnings
 import numpy as np
+import random
 import onnxruntime as rt
 from PIL import Image
 
@@ -18,8 +19,15 @@ def load_model(path:str) -> rt.InferenceSession:
     return sess
 
 
-def run_inference(sess:rt.InferenceSession, TRUNCATION:float=0.7) -> np.array:
+def run_inference(sess:rt.InferenceSession, TRUNCATION:float=0.7, seed=None) -> np.array:
     # return raw array from Generator
+
+    # really badly set numpy seed from string if provided
+    # note that `hash()` would not work here, as it is itself initialized from a random state
+    # it would be possible to force hash() to be set from a static type, but would require an additional python file
+    #   to set the environment seed... So equally awful
+    random.seed(seed) # this may be a string
+    np.random.seed(random.randint(0, 2**32-1)) # use python random state to generate numpy random state repeatably, lol
 
     # randomized generator inputs
     latents = np.random.randn(1,512).astype(np.float32)
