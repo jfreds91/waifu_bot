@@ -7,14 +7,13 @@ import generator
 from PIL import Image
 from discord.ext import commands
 import numpy as np
+import tempfile
 
 config = configparser.ConfigParser()
 config.read('./credentials.cfg')
 token = config['discord']['token']
 
 # prepare client and bot object
-#client = discord.Client()
-filename = './discord_waifu.jpeg'
 bot = commands.Bot(command_prefix='$')
 # prepare model
 sess = generator.load_model("/Users/jesse/Documents/waifu_bot/twdne3.onnx")
@@ -104,14 +103,17 @@ async def claim_waifu(ctx, arg=None):
     pred = generator.run_inference(sess, seed=arg)
     # post process
     arr = generator.post_process_preds(pred)
-    # save waifu
+    # save waifu in named temporary file. Name is only important to let PIL know what format to use
     im = Image.fromarray(arr)
-    im.save(filename)
+    temp = tempfile.NamedTemporaryFile(suffix=".jpeg")
+    im.save(temp)
 
     await ctx.send(
         content=f'Meet {arg}-chan, isn\'t (s)he beautiful?' if arg else None,
-        file=discord.File(filename)
+        file=discord.File(temp.name)
         )
+
+    temp.close()
 
 
 bot.run(token)
