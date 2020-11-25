@@ -16,7 +16,8 @@ token = config['discord']['token']
 # prepare client and bot object
 bot = commands.Bot(command_prefix='$')
 # prepare model
-sess = generator.load_model("/Users/jesse/Documents/waifu_bot/twdne3.onnx")
+sess = generator.load_model("./twdne3.onnx")
+print("Successfully loaded model")
 
 
 @bot.event
@@ -100,13 +101,16 @@ async def claim_waifu(ctx, arg=None):
 
     # generate waifu
     # run inference
+    print("Running inference")
     pred = generator.run_inference(sess, seed=arg)
     # post process
+    print("Post-processing")
     arr = generator.post_process_preds(pred)
     # save waifu in named temporary file. Name is only important to let PIL know what format to use
     im = Image.fromarray(arr)
     temp = tempfile.NamedTemporaryFile(suffix=".jpeg")
     im.save(temp)
+    print(f"Saved {temp.name}")
 
     await ctx.send(
         content=f'Meet {arg}-chan, isn\'t (s)he beautiful?' if arg else None,
