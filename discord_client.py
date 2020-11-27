@@ -1,3 +1,4 @@
+#!/home/ubuntu/waifu_bot/waifu_bot/bin/python
 # async routines: https://dev.to/code_enzyme/introduction-to-using-async-await-in-python-2i0n
 # discord client event reference: https://discordpy.readthedocs.io/en/latest/api.html
 
@@ -8,6 +9,7 @@ from PIL import Image
 from discord.ext import commands
 import numpy as np
 import tempfile
+from datetime import datetime
 
 config = configparser.ConfigParser()
 config.read('./credentials.cfg')
@@ -101,7 +103,7 @@ async def claim_waifu(ctx, arg=None):
 
     # generate waifu
     # run inference
-    print("Running inference")
+    print(f"Running inference for {ctx.message.author} at {datetime.now()}")
     pred = generator.run_inference(sess, seed=arg)
     # post process
     print("Post-processing")
