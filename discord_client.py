@@ -88,12 +88,16 @@ async def claim_waifu_truncation(ctx, arg='0.75'):
     arr = generator.post_process_preds(pred)
     # save waifu
     im = Image.fromarray(arr)
-    im.save(filename)
+    temp = tempfile.NamedTemporaryFile(suffix=".jpeg")
+    im.save(temp)
+    print(f"Saved {temp.name}")
 
     await ctx.send(
         content=f'intensity = {trunc}',
-        file=discord.File(filename)
+        file=discord.File(temp.name)
         )
+    temp.close()
+
 
 @bot.command()
 async def claim_waifu(ctx, arg=None):
