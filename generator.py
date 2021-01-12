@@ -54,7 +54,7 @@ def post_process_preds(pred:np.array) -> np.array:
 
 def main():
 
-    ONNX_MODEL = "/Users/jesse/Documents/waifu_bot/twdne3.onnx"
+    ONNX_MODEL = "./twdne3.onnx"
     TRUNCATION = 1.5
 
     # get session
