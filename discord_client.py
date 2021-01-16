@@ -10,6 +10,7 @@ from discord.ext import commands
 import numpy as np
 import tempfile
 from datetime import datetime
+from aws import secret_reader
 
 config = configparser.ConfigParser()
 config.read('./credentials.cfg')
