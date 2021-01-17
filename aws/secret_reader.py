@@ -2,6 +2,7 @@
 # If you need more information about configurations or implementing the sample code, visit the AWS docs:   
 # https://aws.amazon.com/developers/getting-started/python/
 
+import json
 import boto3
 import base64
 from botocore.exceptions import ClientError
@@ -60,7 +61,7 @@ def get_secret():
             secret = base64.b64decode(get_secret_value_response['SecretBinary'])
             
     # Your code goes here. 
-    return secret, get_secret_value_response
+    return json.loads(secret) # convert to a dict
 
 
 if __name__ == '__main__':

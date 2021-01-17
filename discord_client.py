@@ -2,6 +2,7 @@
 # async routines: https://dev.to/code_enzyme/introduction-to-using-async-await-in-python-2i0n
 # discord client event reference: https://discordpy.readthedocs.io/en/latest/api.html
 
+import os
 import discord
 import configparser
 import generator
@@ -12,9 +13,13 @@ import tempfile
 from datetime import datetime
 from aws import secret_reader
 
-config = configparser.ConfigParser()
-config.read('./credentials.cfg')
-token = config['discord']['token']
+if os.path.isfile('./credentials.cfg'):
+    config = configparser.ConfigParser()
+    config.read('./credentials.cfg')
+    token = config['discord']['token']
+else:
+    secret = secret_reader.get_secret()
+    token = secret['token']
 
 # prepare client and bot object
 bot = commands.Bot(command_prefix='$')
