@@ -37,3 +37,9 @@ The application is fun, but I wrote this project to explore a few interesting te
 3. GANs. Though I did not train this model myself, learning how to (ab)use the generator model was a learning experience, and Gwern's blog was a fascinating read.
 
 Thanks for reading, enjoy!
+
+## Docker Help
+Pull Image: `docker pull jfreds/waifu_docker_test:latest`
+Build Image from source: `docker build -t jfreds/waifu_docker_test:v0`
+Open shell in container: `docker run --entrypoint "/bin/bash" -it jfreds/waifu_docker_test:v0`
+Remove all stopped containers: `docker rm $(docker ps -a -q)`
