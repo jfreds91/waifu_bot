@@ -39,13 +39,17 @@ The application is fun, but I wrote this project to explore a few interesting te
 Thanks for reading, enjoy!
 
 ## Docker Help
-Pull Image: `docker pull jfreds/waifu_docker_test:latest`
-Build Image from source: `docker build -t jfreds/waifu_docker_test:v0`
-Open shell in container: `docker run --entrypoint "/bin/bash" -it jfreds/waifu_docker_test:v0`
-Remove all stopped containers: `docker rm $(docker ps -a -q)`
-Run waifu generation: docker run -v "$(pwd)":/mnt/here jfreds/waifu_docker_test:v0 python3.7 main.py -dir /mnt/here/ -t 1.25 -s Jesse
-saved: /mnt/here/Jesse.jpeg
-where -v is volume mount (allows container to save output to host storage)
-where -dir is save location (should be mounted location)
-where -t is truncation float; default is 0.7 (from git repo)
-where -s is seed string for waifu. Allows spaces, quotes not needed.
+### General Docker
+- Pull Image: `docker pull jfreds/waifu_docker_test:latest`
+- Build Image from Dockerfile: `docker build -t jfreds/waifu_docker_test:v0`
+- Open shell in container: `docker run --entrypoint "/bin/bash" -it jfreds/waifu_docker_test:v0`
+- Remove all stopped containers: `docker rm $(docker ps -a -q)`  
+
+### Run this app specifically
+- Run waifu generation: `docker run -v <local_dir>:<mounted_dir> jfreds/waifu_docker_test:v0 python3.7 main.py -dir <mounted_dir> -t <float> -s <string>`  
+- ex: `docker run -v "$(pwd)":/mnt/here jfreds/waifu_docker_test:v0 python3.7 main.py -dir /mnt/here -t 0.85 -s Elon Musk` 
+    - saves: Elon Musk.jpeg  
+    - where -v is local volume mount (allows container to save output to host storage)  
+    - where -dir is save location (should be mounted location)  
+    - where -t is truncation float; default is 0.7 (from git repo)  
+    - where -s is seed string for waifu. Allows spaces, quotes not needed.  
