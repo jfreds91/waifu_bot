@@ -17,7 +17,7 @@ parser.add_argument('-t', type=float, dest='TRUNCATION',
 	help='truncation value to use. Defaults to None to use package default')
 parser.add_argument('-dir', type=str, dest='dir', default='.',
 	help='Where to store output image. Sould be a mounted directory')
-parser.add_argument('-w', type=bool, dest='watermark', required=False, default=False,
+parser.add_argument('-w', dest='watermark', action='store_true',
 	help='boolean for if waifubot will apply a watermark and increase saturation')
 
 # handle arguments
@@ -67,8 +67,9 @@ if args['watermark']:
 	fontsize_auth = 20
 	font_auth = os.path.join(os.path.dirname(os.path.abspath(__file__)),'coolvetica/coolvetica rg.ttf')
 
-	shadow_text(draw, name, font_title, fontsize_title, x_title, y_title, 2)
-	shadow_text(draw, author, font_auth, fontsize_auth, x_auth, y_auth, 2)
+	if name:
+	    shadow_text(draw, name, font_title, fontsize_title, x_title, y_title, 2)
+	# shadow_text(draw, author, font_auth, fontsize_auth, x_auth, y_auth, 2)
 
 # save waifu
 filename = 'docker_waifu'

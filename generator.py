@@ -28,7 +28,7 @@ def run_inference(sess:rt.InferenceSession, TRUNCATION:float=0.7, seed=None) -> 
     #   to set the environment seed... So equally awful
     random.seed(seed) # this may be a string
     np.random.seed(random.randint(0, 2**32-1)) # use python random state to generate numpy random state repeatably, lol
-
+    
     # randomized generator inputs
     latents = np.random.randn(1,512).astype(np.float32)
     truncation = np.array([TRUNCATION]).astype(np.float32)
