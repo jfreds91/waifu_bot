@@ -1,0 +1,10 @@
+__pycache__
+*.ipynb*
+aws
+waifu_bot
+*.jpeg
+*.png
+*.onnx
+.DS_Store
+.vscode
+*.cfg
