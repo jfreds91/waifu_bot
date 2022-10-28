@@ -12,6 +12,7 @@ import numpy as np
 import tempfile
 from datetime import datetime
 from aws import secret_reader
+from im_utils import apply_watermark
 
 if os.path.isfile('./credentials.cfg'):
     config = configparser.ConfigParser()
@@ -32,28 +33,6 @@ print("Successfully loaded model")
 async def on_ready():
     # print(f'We have logged in as {client.user}')
     print(f'We have logged in as {bot.user}')
-
-
-# @bot.event
-# async def on_message(message):
-
-#     if message.author == bot.user:
-#         # self message, do nothing
-#         return
-    
-#     if message.content.lower().startswith('claim waifu'):
-#         await message.channel.send(f'Recieved call for waifu from {message.author}...')
-        
-#         # generate waifu
-#         # run inference
-#         pred = generator.run_inference(sess, TRUNCATION=.75)
-#         # post process
-#         arr = generator.post_process_preds(pred)
-#         # save waifu
-#         im = Image.fromarray(arr)
-#         im.save(filename)
-
-#         await message.channel.send(file=discord.File(filename))
 
 
 # bot arguments
@@ -121,6 +100,7 @@ async def claim_waifu(ctx, arg=None):
     # save waifu in named temporary file. Name is only important to let PIL know what format to use
     im = Image.fromarray(arr)
     temp = tempfile.NamedTemporaryFile(suffix=".jpeg")
+    im = apply_watermark(im, arg)
     im.save(temp)
     print(f"Saved {temp.name}")
 
